@@ -53,19 +53,15 @@
     // Replace this with your own endpoint
     const getAuthURL = "https://z1jm527p32.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url";
 
-    getAuthUrlButton.onclick = function () {
-      fetch(getAuthURL)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (json) {
-          const result = JSON.stringify(json);
-          // we get the value of authUrl
-          const { authUrl } = JSON.parse(result);
-          // then add it to the html
-          resultElement.innerText = result;
-          resultLink.href = authUrl;
-        });
+    getAuthUrlButton.onclick = async function () {
+      try {
+        const response = await fetch(getAuthURL);
+        const json = await response.json();
+        resultElement.innerText = JSON.stringify(json);
+        resultLink.href = json.authUrl;
+      } catch (error) {
+        resultElement.innerText = "Error fetching auth URL: " + error;
+      }
     };
     const codeValue = document.getElementById("code");
     const getAccessToken = document.getElementById("getToken");
@@ -83,32 +79,42 @@
       }
       const getTokenRequest = getToken + "/" + code;
       fetch(getTokenRequest)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (json) {
+        .then(response => response.json())
+        .then(json => {
           accessTokenElement.innerText = JSON.stringify(json);
+        })
+        .catch(error => {
+          accessTokenElement.innerText = "Error fetching token: " + error;
         });
     };
-    
+
     // -- STEP 3
     const getEvents = document.getElementById("getEvents");
-      const events = document.getElementById("events");
-      const getCalendarEvents = "https://z1jm527p32.execute-api.us-east-1.amazonaws.com/dev/api/get-events";
+    const events = document.getElementById("events");
+    const getCalendarEvents = "https://z1jm527p32.execute-api.us-east-1.amazonaws.com/dev/api/get-events";
 
-      
-      getEvents.onclick = function () {
-        const { access_token } = JSON.parse(accessTokenElement.innerText);
-        const eventRequest = getCalendarEvents + "/" + access_token;
+
+    getEvents.onclick = function () {
+      try {
+        const parsedToken = JSON.parse(accessTokenElement.innerText);
+        if (!parsedToken.access_token) {
+          events.innerText = "Error: No access token found.";
+          return;
+        }
+        const eventRequest = `${getCalendarEvents}/${parsedToken.access_token}`;
         fetch(eventRequest)
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (json) {
+          .then(response => response.json())
+          .then(json => {
             events.innerText = JSON.stringify(json, null, 2);
+          })
+          .catch(error => {
+            events.innerText = "Error fetching events: " + error;
           });
-      };
-      // -- END OF STEP 3
+      } catch (error) {
+        events.innerText = "Error parsing access token: " + error;
+      }
+    };
+    // -- END OF STEP 3
 
   </script>
 
