@@ -66,6 +66,7 @@ module.exports.getCalendarEvents = async (event) => {
   oAuth2Client.setCredentials({ access_token });
 
   try {
+    // Mock DATA
     const response = await calendar.events.list({
       calendarId: CALENDAR_ID,
       auth: oAuth2Client,
