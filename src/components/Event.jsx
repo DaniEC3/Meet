@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Event = () => {
+const Event = ({event}) => {
+
+  const [showDetails, setShowDetails] = useState(false);
+  const eventCreated = event?.created
+  const eventName = event?.summary
+  const eventLocation = event?.location
+  const eventDescription = event?.description
+  const handleEventClicked = () => {
+    setShowDetails((prev) => !prev); // Toggle visibility
+
+  }
   return (
     <li>
-
+      <div className='eventTitle'>{eventName}</div>
+      <div className='eventCreated'>{eventCreated}</div>
+      <div className='eventLocation'>{eventLocation}</div>
+      <button
+        onClick={handleEventClicked}
+      >
+        show details
+      </button>
+      {showDetails && (
+        <div className="detailsInformation">
+          <div>About event:</div>
+          <div href="#">See details on Google Calendar</div>
+          <div className="eventDescription">{eventDescription}</div>
+        </div>
+      )}
     </li>
   )
 }

@@ -5,10 +5,13 @@ import CitySearch from '../components/CitySearch';
 import { extractLocations, getEvents } from '../api';
 
 describe('<CitySearch /> component', () => {
+
   let CitySearchComponent;
+
   beforeEach(() => {
     CitySearchComponent = render(<CitySearch />);
   });
+
   test('renders text input', () => {
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     expect(cityTextBox).toBeInTheDocument();
@@ -20,7 +23,6 @@ describe('<CitySearch /> component', () => {
     const suggestionList = CitySearchComponent.queryByRole('list');
     expect(suggestionList).not.toBeInTheDocument();
   });
-
 
   test('renders a list of suggestions when city textbox gains focus', async () => {
     const user = userEvent.setup(); //user interaction
