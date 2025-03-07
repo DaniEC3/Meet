@@ -33,9 +33,15 @@ describe('<CitySearch /> component', () => {
 
   test('updates list of suggestions correctly when user types in city textbox', async () => {
     const user = userEvent.setup();
+
+    // Extract Locations of events
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-    CitySearchComponent.rerender(<CitySearch allLocations ={allLocations} />);
+
+    CitySearchComponent.rerender(
+    <CitySearch 
+    allLocations = {allLocations} 
+    />);
 
 
     // user types "Berlin" in city textbox
