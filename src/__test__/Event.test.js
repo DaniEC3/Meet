@@ -12,17 +12,23 @@ describe('<Event /> component', () => {
     EventComponent = render(<Event />);
   });
 
-
   test('An event element is collapsed by default', async () => {
     const allEvents = await getEvents();
-    const eventSummary = EventComponent.queryByText(allEvents[0].summary);
     const events = allEvents
     const event = events[0]
     EventComponent.rerender(<Event event={event} />);
-    expect(eventSummary).not.toBeInTheDocument();
-  });
 
-  
+    const eventSummary = EventComponent.queryByText(allEvents[0].summary);
+    const eventCreated = EventComponent.queryByText(allEvents[0].created);
+    const eventLocation = EventComponent.queryByText(allEvents[0].location);
+    
+
+    expect(eventSummary).toBeInTheDocument();
+    expect(eventCreated).toBeInTheDocument();
+    expect(eventLocation).toBeInTheDocument();
+
+
+  });
 
   test('renders event details button with the tile (show details)', () => {
     const button = EventComponent.queryByText('show details');
@@ -34,10 +40,11 @@ describe('<Event /> component', () => {
     const toggleButton = EventComponent.queryByText('show details');
 
     const allEvents = await getEvents(); // Wait for events to be fetched
+
     const events = allEvents
     const event = events[0]
-    EventComponent.rerender(<Event event={event} />);
 
+    EventComponent.rerender(<Event event={event} />);
     //user click "show details for"
 
     await user.click(toggleButton);
