@@ -9,6 +9,9 @@ describe('<App /> component', () => {
     AppDOM = render(<App />).container.firstChild;
   })
 
+  test('renders NumberOfEvents component', () => {
+    expect(AppDOM.querySelector('#number-of-events')).toBeInTheDocument();
+  });
 
   test('renders list of events', () => {
     expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
