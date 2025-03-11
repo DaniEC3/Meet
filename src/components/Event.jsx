@@ -16,10 +16,8 @@ const Event = ({event}) => {
       <div className='eventTitle'>{eventName}</div>
       <div className='eventCreated'>{eventCreated}</div>
       <div className='eventLocation'>{eventLocation}</div>
-      <button
-        onClick={handleEventClicked}
-      >
-        show details
+      <button onClick={handleEventClicked}>
+        {showDetails ? "Hide Details" : "Show Details"}
       </button>
       {showDetails && (
         <div className="detailsInformation">
