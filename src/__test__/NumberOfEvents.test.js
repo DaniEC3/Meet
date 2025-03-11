@@ -7,9 +7,12 @@ import NumberOfEvents from '../components/NumberOfEvents';
 describe('<NumberOfEvents /> component', () => {
 
   let NumberOfEventsComponent;
+  const mockSetEventCount = jest.fn(); // Create a mock function
 
   beforeEach(() => {
-    NumberOfEventsComponent = render(<NumberOfEvents />);
+    NumberOfEventsComponent = render(<NumberOfEvents 
+      setEventCount = {mockSetEventCount}
+      />);
   });
 
   test('renders text input', () => {
