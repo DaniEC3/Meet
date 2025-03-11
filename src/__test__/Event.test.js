@@ -31,13 +31,13 @@ describe('<Event /> component', () => {
   });
 
   test('renders event details button with the tile (show details)', () => {
-    const button = EventComponent.queryByText('show details');
+    const button = EventComponent.getByRole("button", { name: /show details/i });;
     expect(button).toBeInTheDocument();
   });
 
   test('User can expand an event to see details', async () => {
     const user = userEvent.setup();
-    const toggleButton = EventComponent.queryByText('show details');
+    const toggleButton = EventComponent.getByRole("button", { name: /show details/i });
 
     const allEvents = await getEvents(); // Wait for events to be fetched
 
