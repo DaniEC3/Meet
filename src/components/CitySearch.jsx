@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 const CitySearch = ({allLocations}) => {
@@ -21,6 +21,10 @@ const CitySearch = ({allLocations}) => {
     setQuery(value);
     setShowSuggestions(false); // to hide the list
   };
+
+  useEffect(() => {
+    setSuggestions(allLocations);
+  }, [`${allLocations}`]);
 
   return (
     <div id="city-search">
