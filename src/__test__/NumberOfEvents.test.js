@@ -11,9 +11,9 @@ describe('<NumberOfEvents /> component', () => {
   const mockSetCurrentNOE = jest.fn(); // Create a mock function
 
   beforeEach(() => {
-    NumberOfEventsComponent = render(<NumberOfEvents 
-      setCurrentNOE = {mockSetCurrentNOE}
-      />);
+    NumberOfEventsComponent = render(<NumberOfEvents
+      setCurrentNOE={mockSetCurrentNOE}
+    />);
   });
 
   test('renders text input', () => {
@@ -38,20 +38,21 @@ describe('<NumberOfEvents /> component', () => {
 describe('<NumberOfEvents /> integration', () => {
   test('user changes the value of number of events', async () => {
     const user = userEvent.setup();
-    const NumberOfEventsComponent = render(<NumberOfEvents />);
+    const NumberOfEventsComponent = render(<NumberOfEvents setCurrentNOE={jest.fn()} />);
+    expect(NumberOfEventsComponent.container).toBeInTheDocument();
     const NumberOfEvents = NumberOfEventsComponent.container.firstChild;
 
     const NumberOfEventsDOM = NumberOfEvents.querySelector('#number-of-events');
     const NumberOfEventsInput = within(NumberOfEventsDOM).queryByRole('textbox');
 
     await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
-  
+
     const AppComponent = render(<App />);
     const AppDOM = AppComponent.container.firstChild;
 
     const EventListDOM = AppDOM.querySelector('#event-list');
-    const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');  
-    
+    const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
+
     expect(allRenderedEventItems.length).toBe(10);
   });
 });
