@@ -12,7 +12,7 @@ const Event = ({event}) => {
 
   }
   return (
-    <li>
+    <li className='event'>
       <div className='eventTitle'>{eventName}</div>
       <div className='eventCreated'>{eventCreated}</div>
       <div className='eventLocation'>{eventLocation}</div>

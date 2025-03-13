@@ -45,7 +45,8 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
             onClick={handleItemClicked}
           >{suggestion}</li>
         })}
-        <li key='See all cities'>
+        <li key='See all cities'
+        onClick={handleItemClicked}>
           <b>See all cities</b>
         </li>
       </ul>
