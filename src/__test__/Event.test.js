@@ -21,11 +21,12 @@ describe('<Event /> component', () => {
     const eventSummary = EventComponent.queryByText(allEvents[0].summary);
     const eventCreated = EventComponent.queryByText(allEvents[0].created);
     const eventLocation = EventComponent.queryByText(allEvents[0].location);
-    
+    const eventHide = EventComponent.queryByText(/About event:/i);
 
     expect(eventSummary).toBeInTheDocument();
     expect(eventCreated).toBeInTheDocument();
     expect(eventLocation).toBeInTheDocument();
+    expect(eventHide).toBeNull();
 
 
   });
