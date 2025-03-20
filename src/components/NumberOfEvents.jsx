@@ -11,9 +11,10 @@ const NumberOfEvents = ({ setCurrentNOE }) => {
 
   return (
     <div id="number-of-events">
-      <label htmlFor="number-of-events">Number of Events:</label>
+      <label htmlFor="events-num">Number of Events:</label>
       <input
         type="number"
+        id="events-num"  // 👈 Make sure this matches htmlFor in <label>
         className="events-num"
         role="textbox"
         value={eventNumber}

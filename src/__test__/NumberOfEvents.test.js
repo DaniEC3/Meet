@@ -1,7 +1,7 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import { render, within, screen, waitFor } from '@testing-library/react';
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import userEvent from '@testing-library/user-event';
-import { extractLocations, getEvents } from '../api';
 import NumberOfEvents from '../components/NumberOfEvents';
 import App from '../App';
 
@@ -17,7 +17,7 @@ describe('<NumberOfEvents /> component', () => {
   });
 
   test('renders text input', () => {
-    const NumEventsBox = NumberOfEventsComponent.queryByRole('textbox');
+    const NumEventsBox = screen.getByLabelText(/Number of Events:/i);
     expect(NumEventsBox).toBeInTheDocument();
     expect(NumEventsBox).toHaveClass('events-num');
   });
@@ -35,24 +35,25 @@ describe('<NumberOfEvents /> component', () => {
   });
 });
 
-describe('<NumberOfEvents /> integration', () => {
-  test('user changes the value of number of events', async () => {
+describe("<NumberOfEvents /> integration", () => {
+  test("user changes the value of number of events", async () => {
     const user = userEvent.setup();
-    const NumberOfEventsComponent = render(<NumberOfEvents setCurrentNOE={jest.fn()} />);
-    expect(NumberOfEventsComponent.container).toBeInTheDocument();
-    const NumberOfEvents = NumberOfEventsComponent.container.firstChild;
+    const { container } = render(<App />);
+    
+    // Ensure App is rendered
+    expect(container).toBeInTheDocument();
 
-    const NumberOfEventsDOM = NumberOfEvents.querySelector('#number-of-events');
-    const NumberOfEventsInput = within(NumberOfEventsDOM).queryByRole('textbox');
+    // Find the input field
+    const numberOfEventsInput = screen.getByLabelText(/Number of Events:/i);
+    // Change the number of events to 10
+    await user.clear(numberOfEventsInput); // Clears existing value
+    await user.type(numberOfEventsInput, "10"); // Types new value
 
-    await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
-
-    const AppComponent = render(<App />);
-    const AppDOM = AppComponent.container.firstChild;
-
-    const EventListDOM = AppDOM.querySelector('#event-list');
-    const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
-
-    expect(allRenderedEventItems.length).toBe(10);
+    // Wait for the event list to update
+    await waitFor(() => {
+      const eventList = container.querySelector("#event-list");
+      const allRenderedEventItems = within(eventList).queryAllByRole("listitem"); // Fix: Use "listitem"
+      expect(allRenderedEventItems.length).toBe(10);
+    });
   });
 });
