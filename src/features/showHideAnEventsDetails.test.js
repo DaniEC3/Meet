@@ -45,7 +45,7 @@ defineFeature(feature, test => {
       const user = userEvent.setup();
 
       // Find the "Show Details" button inside the event item
-      const toggleButton = AppComponent.container.querySelector('details-btn')
+      const toggleButton = AppComponent.container.querySelector('.details-btn')
   
       // Simulate clicking the "Show Details" button
       await user.click(toggleButton);
