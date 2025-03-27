@@ -84,6 +84,14 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
+ }
+
 /* Number of Events Component */
 
 #number-of-events {
