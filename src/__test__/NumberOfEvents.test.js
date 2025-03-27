@@ -13,6 +13,7 @@ describe('<NumberOfEvents /> component', () => {
   beforeEach(() => {
     NumberOfEventsComponent = render(<NumberOfEvents
       setCurrentNOE={mockSetCurrentNOE}
+      setErrorAlert={() => { }}
     />);
   });
 
