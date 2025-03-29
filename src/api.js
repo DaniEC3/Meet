@@ -24,6 +24,11 @@ export const getEvents = async () => {
   if (window.location.href.startsWith('http://localhost')) {
     return mockData;
   }
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events ? JSON.parse(events) : [];
+  }
   const token = await getAccessToken();
   const removeQuery = () => {
     let newurl;
@@ -46,6 +51,8 @@ export const getEvents = async () => {
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
+      NProgress.done();
+      localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
     } else return null;
   }
@@ -53,8 +60,8 @@ export const getEvents = async () => {
 const getToken = async (code) => {
   try {
     const encodeCode = encodeURIComponent(code);
- 
-    const response = await fetch( 'https://3fbljt2h8g.execute-api.us-east-1.amazonaws.com/dev/api/token' + '/' + encodeCode);
+
+    const response = await fetch('https://3fbljt2h8g.execute-api.us-east-1.amazonaws.com/dev/api/token' + '/' + encodeCode);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
@@ -64,7 +71,7 @@ const getToken = async (code) => {
   } catch (error) {
     error.json();
   }
- }
+}
 
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
