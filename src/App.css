@@ -122,6 +122,25 @@ input[type="number"] {
   border-color: #3b8bfc; /* Optional: Add focus effect */
 }
 
+/*  */
+
+/* Charts Component */
+
+.charts-container {
+  width: 99%;
+  height: 400;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*  */
+
 /* Event-List Component */
 
 #event-list {
